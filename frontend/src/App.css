@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Optional: Global gradient backgrounds */
+body {
+  @apply bg-darkbg text-white transition-colors duration-300;
+}
+
+.gradient-header {
+  @apply bg-gradient-to-r from-primary-600 to-pink-500 text-white;
+}
+
+.card {
+  @apply bg-darkcard rounded-2xl shadow-glow p-4;
+}
