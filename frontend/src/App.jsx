@@ -1,18 +1,17 @@
 import React, { useState } from "react";
-import { Routes, Route, Navigate } from "react-router-dom"; // removed BrowserRouter
+import { Routes, Route, Navigate } from "react-router-dom"; // Removed BrowserRouter (already in main.jsx)
 
-// Theme Provider
+// 🌓 Theme Provider
 import { ThemeProvider } from "./context/ThemeContext";
 
-// Components
+// 🧩 Components
 import Navbar from "./components/Navbar";
 import Blogs from "./components/Blogs";
 import Footer from "./components/Footer";
 import AddFriend from "./components/AddFriend";
 import FriendsDashboard from "./components/FriendsDashboard";
 
-
-// Pages
+// 🗂️ Pages
 import Home from "./pages/Home.jsx";
 import SingleBlogs from "./pages/SingleBlogs.jsx";
 import AddBlog from "./pages/AddBlog.jsx";
@@ -22,9 +21,15 @@ import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import Profile from "./pages/Profile.jsx";
 
-import Dashboard from "./pages/Dashboard.jsx";
+// 🧱 New Dashboard Layout + Pages
+import DashboardLayout from "./pages/DashboardLayout.jsx";
+import DashboardHome from "./pages/DashboardHome.jsx";
+import AnalyticsPage from "./pages/AnalyticsPage.jsx";
+import ManagePostsPage from "./pages/ManagePostsPage.jsx";
+import SettingsPage from "./pages/SettingsPage.jsx";
+import MessagesPage from "./pages/MessagesPage.jsx";
 
-// Error Boundary
+// ⚠️ Error Boundary
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
@@ -57,10 +62,16 @@ function App() {
   return (
     <ThemeProvider>
       <ErrorBoundary>
-        <Navbar currentUser={currentUser} setCurrentUser={setCurrentUser}  onSearch={setSearchQuery} />
-        <div className="p-4 min-h-screen">
+        {/* 🌐 Navbar visible on all pages */}
+        <Navbar
+          currentUser={currentUser}
+          setCurrentUser={setCurrentUser}
+          onSearch={setSearchQuery}
+        />
+
+        <div className="p-4 min-h-screen bg-white">
           <Routes>
-            {/* Public Routes */}
+            {/* 🌍 Public Routes */}
             <Route path="/" element={<Home />} />
             <Route path="/blogs" element={<Blogs searchQuery={searchQuery} />} />
             <Route path="/blogs/:id" element={<SingleBlogs />} />
@@ -73,7 +84,7 @@ function App() {
               element={<Register setCurrentUser={setCurrentUser} />}
             />
 
-            {/* Protected Routes */}
+            {/* ✍️ Protected Routes */}
             <Route
               path="/add-blog"
               element={
@@ -84,6 +95,7 @@ function App() {
                 )
               }
             />
+
             <Route
               path="/chat"
               element={
@@ -97,6 +109,7 @@ function App() {
                 )
               }
             />
+
             <Route
               path="/admin"
               element={
@@ -107,6 +120,7 @@ function App() {
                 )
               }
             />
+
             <Route
               path="/profile"
               element={
@@ -118,27 +132,29 @@ function App() {
               }
             />
 
+            {/* 🧭 Dashboard with Nested Routes */}
             <Route
-             path="/dashboard"
-             element={
-              currentUser ? (
-                <Dashboard user={currentUser} />
-            ) : (
-             <Navigate to="/login" />
-           )
-          }
-        />
+              path="/dashboard"
+              element={
+                currentUser ? <DashboardLayout /> : <Navigate to="/login" />
+              }
+            >
+              <Route index element={<DashboardHome />} />
+              <Route path="analytics" element={<AnalyticsPage />} />
+              <Route path="manage-posts" element={<ManagePostsPage />} />
+              <Route path="settings" element={<SettingsPage />} />
+              <Route path="messages" element={<MessagesPage />} />
+            </Route>
 
-           
-            
-
-          <Route
-           path="/friends"
-           element={<FriendsDashboard user={currentUser} />}
-        />
-
+            {/* 👥 Friends Section */}
+            <Route
+              path="/friends"
+              element={<FriendsDashboard user={currentUser} />}
+            />
           </Routes>
         </div>
+
+        {/* 🦶 Footer visible on all pages */}
         <Footer />
       </ErrorBoundary>
     </ThemeProvider>

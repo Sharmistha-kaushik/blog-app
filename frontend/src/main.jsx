@@ -1,18 +1,16 @@
-// src/main.jsx
-import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";  // ✅ For routing
 import App from "./App";
-import { ThemeProvider } from "./context/ThemeContext.jsx"; // ✅ import ThemeProvider
+import { ThemeProvider } from "./context/ThemeContext.jsx";
+import { AuthProvider } from "./context/AuthContext.jsx";
+import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 
-
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <ThemeProvider>
+  <ThemeProvider>
+    <AuthProvider>
+      <BrowserRouter>
         <App />
-      </ThemeProvider>
-    </BrowserRouter>
-  </React.StrictMode>
+      </BrowserRouter>
+    </AuthProvider>
+  </ThemeProvider>
 );
