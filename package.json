@@ -1,0 +1,13 @@
+{
+  "name": "blogging-platform",
+  "version": "1.0.0",
+  "scripts": {
+    "start:backend": "cd backend && npm run dev",
+    "start:frontend": "cd frontend && npm run dev",
+    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0",
+    "gh-pages": "^6.3.0"
+  }
+}
